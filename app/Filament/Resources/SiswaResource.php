@@ -35,9 +35,12 @@ class SiswaResource extends Resource
             Textarea::make('alamat')->required(),
             TextInput::make('kontak')->required(),
             TextInput::make('email')->email()->required()->unique(),
-            Select::make('status_pkl')
-                ->options(['no' => 'Belum diterima PKL', 'yes' => 'Sudah diterima PKL'])
-                ->required(),
+           Select::make('status_pkl')
+                ->options([
+                    0 => 'Belum diterima PKL',
+                    1 => 'Sudah diterima PKL',
+                ])
+                ->required()
             ]);
 
     }
@@ -56,7 +59,8 @@ class SiswaResource extends Resource
                 TextColumn::make('email')->label('E-mail'),
                 TextColumn::make('status_pkl')
                     ->label('Status PKL')
-                    ->formatStateUsing(fn ($state) => $state === 'yes' ? 'Sudah diterima PKL' : 'Belum diterima PKL'),
+                    ->formatStateUsing(fn ($state) => $state == 1 ? 'Sudah diterima PKL' : 'Belum diterima PKL'),
+
             ])
 
             ->filters([
